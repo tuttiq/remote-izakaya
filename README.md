@@ -1,3 +1,11 @@
+## Server Setup
+ - Login firebase
+ - Click Add Project
+ - Click Database tab at the left hand side and Crate database
+ - Go to Rules tab and replece line `allow read, write: if false;` to  `allow read, write;` to allow all access for now
+ - Go back to Home screen, click a gear icon at left top and then click Project settings. 
+ - Add `.env.development` file and set `API_KEY`, `DATABSE_URL`, and `PROJECT_ID` from the screen at the prevous step
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
