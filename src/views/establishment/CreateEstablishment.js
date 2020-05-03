@@ -1,4 +1,5 @@
 import React, { useState }  from 'react';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -67,6 +68,8 @@ export default function CreateEstablishment() {
           >
             Create Izakaya
           </Button>
+
+          <Link to="/foo">Enter sample Izakaya</Link>
         </form>
       </div>
     </Container>

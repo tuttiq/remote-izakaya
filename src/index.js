@@ -10,6 +10,7 @@ import 'firebase/firestore';
 import { Provider } from 'react-redux';
 import createStore from './createStore'
 import App from './views/app/App';
+import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './services/serviceWorker';
 
 // const firebaseConfig = {}; // from Firebase Console
@@ -33,7 +34,9 @@ ReactDOM.render(
         createFirestoreInstance={createFirestoreInstance}
       >
         <React.StrictMode>
+          <BrowserRouter>
             <App />
+          </BrowserRouter>
         </React.StrictMode>
       </ReactReduxFirebaseProvider>
   </Provider>,
