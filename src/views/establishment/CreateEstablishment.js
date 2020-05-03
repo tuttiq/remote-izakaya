@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { useFirestore } from 'react-redux-firebase'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,6 +25,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateEstablishment() {
   const classes = useStyles();
+  const [inputValue, onInputChange] = useState(null)
+  const firestore = useFirestore()
+
+  function onCreateClick(e) {
+    e.preventDefault()
+
+    return firestore.add('izakaya', {
+      name: inputValue,
+      owner: 'Anonymous',
+      createdAt: firestore.FieldValue.serverTimestamp()
+    }).then(() => onInputChange(''))
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -33,8 +45,10 @@ export default function CreateEstablishment() {
         <Typography component="h1" variant="h5">
           Remote Izakaya
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={(e) => onCreateClick(e)} noValidate>
           <TextField
+            onChange={(e) => onInputChange(e.target.value)}
+            value={inputValue || ''}
             variant="outlined"
             margin="normal"
             required
