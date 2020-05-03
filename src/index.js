@@ -2,14 +2,40 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import FirebaseTesing from './FirebaseTesing'
 import * as serviceWorker from './serviceWorker';
+import { db } from './config/firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/firestore';
+import { Provider } from 'react-redux';
+import createStore from './createStore'
+
+const firebaseConfig = {}; // from Firebase Console
+// optional redux-firestore Config Options
+const rfConfig = {
+  userProfile: 'users', // root that user profiles are written to
+  useFirestoreForProfile: true, // Save profile to Firestore instead of Real Time Database
+  useFirestoreForStorageMeta: true // Metadata associated with storage file uploads goes to Firestore
+}
+
+const store = createStore()
 
 ReactDOM.render(
-  <React.StrictMode>
-      <FirebaseTesing />
-      <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider
+        firebase={firebase}
+        config={rfConfig}
+        dispatch={store.dispatch}
+        createFirestoreInstance={createFirestoreInstance}
+      >
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+      </ReactReduxFirebaseProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
