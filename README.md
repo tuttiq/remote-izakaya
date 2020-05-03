@@ -4,7 +4,12 @@
  - Click Database tab at the left hand side and Crate database
  - Go to Rules tab and replece line `allow read, write: if false;` to  `allow read, write;` to allow all access for now
  - Go back to Home screen, click a gear icon at left top and then click Project settings. 
- - Add `.env.development` file and set `API_KEY`, `DATABSE_URL`, and `PROJECT_ID` from the screen at the prevous step
+ - Add `.env.development` file and set `API_KEY`, `DATABSE_URL`, and `PROJECT_ID` as follows from the screen at the prevous step
+ ```
+REACT_APP_FIREBASE_API_KEY=
+REACT_APP_FIREBASE_AUTH_DOMAIN=
+REACT_APP_FIREBASE_PROJECT_ID=
+ ```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
