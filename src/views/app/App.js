@@ -9,7 +9,7 @@ export default function App() {
     <div>
       <Switch>
         <Route path='/' component={CreateEstablishment} exact />
-        <Route path='/foo' component={Establishment} />
+        <Route path='/establishment/:id' component={Establishment} />
         <Route component={Error} />
       </Switch>
       <Footer />

@@ -1,5 +1,4 @@
 import React, { useState }  from 'react';
-import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -24,19 +23,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateEstablishment() {
+export default function CreateEstablishment(props) {
   const classes = useStyles();
   const [inputValue, onInputChange] = useState(null)
   const firestore = useFirestore()
+  
 
   function onCreateClick(e) {
     e.preventDefault()
 
-    return firestore.add('izakaya', {
+    return firestore.add('izakayas', {
       name: inputValue,
       owner: 'Anonymous',
       createdAt: firestore.FieldValue.serverTimestamp()
-    }).then(() => onInputChange(''))
+    }).then((izakaya) => {
+      const id = izakaya.id
+      props.history.push({
+        pathname: `/establishment/${id}`,
+        state: {
+          id: id 
+        }
+      })
+    })
   }
 
   return (
@@ -68,8 +76,6 @@ export default function CreateEstablishment() {
           >
             Create Izakaya
           </Button>
-
-          <Link to="/foo">Enter sample Izakaya</Link>
         </form>
       </div>
     </Container>
