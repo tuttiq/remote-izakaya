@@ -3,13 +3,38 @@
  - Click Add Project
  - Click Database tab at the left hand side and Crate database
  - Go to Rules tab and replece line `allow read, write: if false;` to  `allow read, write;` to allow all access for now
- - Go back to Home screen, click a gear icon at left top and then click Project settings. 
+ - Go back to Home screen, click a gear icon at left top and then click Project settings.
  - Add `.env.development` file and set `API_KEY`, `DATABSE_URL`, and `PROJECT_ID` as follows from the screen at the prevous step
  ```
 REACT_APP_FIREBASE_API_KEY=
 REACT_APP_FIREBASE_AUTH_DOMAIN=
 REACT_APP_FIREBASE_PROJECT_ID=
  ```
+
+## Video Chat setup
+
+- Create a Twilio account and select you'll use Video chat on your project
+- Find your Twilio Account SID on your console
+- Find the Programmable Video Tools section in the Twilio menu, API Keys
+- Create a key pair and copy the SID and Secret
+
+You `.env` file should have these variables
+
+```
+TWILIO_ACCOUNT_SID=
+TWILIO_API_KEY=
+TWILIO_API_SECRET=
+```
+
+### To run the express server AND react app
+
+```
+$ npm run dev
+```
+
+Server will run on port 3001, client will run on port 3000.
+
+--------------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
