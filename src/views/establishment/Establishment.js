@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useFirestore } from 'react-redux-firebase'
-import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 
@@ -34,7 +33,7 @@ export default function Establishment(props) {
   const [izakaya, setIzakaya] = useState(null)
 
   useEffect(() => {
-    firestore.get({ collection: "izakayas", doc: id }).then((izakaya) => {
+    firestore.collection("izakayas").doc(id).onSnapshot((izakaya) =>{
       setIzakaya(izakaya.data())
     })
   }, []);
