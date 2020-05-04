@@ -34,10 +34,6 @@ export default function Establishment(props) {
   const [izakaya, setIzakaya] = useState(null)
 
   useEffect(() => {
-    //firestore.get({ collection: "izakayas", doc: id }).then((izakaya) => {
-      //setName(izakaya.data().name)
-    //})
-
     firestore.get({ collection: "izakayas", doc: id }).then((izakaya) => {
       setIzakaya(izakaya.data())
     })
