@@ -31,30 +31,31 @@ export default function Establishment(props) {
 
   const firestore = useFirestore()
   const id = props.history.location.state.id
-  const [name, setName] =  useState(undefined)
+  const [izakaya, setIzakaya] = useState(null)
 
   useEffect(() => {
     firestore.get({ collection: "izakayas", doc: id }).then((izakaya) => {
-      setName(izakaya.data().name)
+      setIzakaya(izakaya.data())
     })
-  });
+  }, []);
 
   return (
     <Container component="main">
-      <h1>{name}</h1>
-      <div className={classes.root}>
-        <Card elevation={3}>
-          <div className={classes.avatar}>
-            <Avatar>H</Avatar>
-            <Avatar>H</Avatar>
-            <Avatar>H</Avatar>
-            <Avatar>H</Avatar>
-            <Avatar>H</Avatar>
-            <Avatar>H</Avatar>
-          </div>
-        </Card>
-        <Paper elevation={3} />
+
+    { izakaya &&
+      <div>
+        <h1>{izakaya.name}</h1>
+        <div className={classes.root}>
+          {izakaya.tables.map(table =>(
+            <Card elevation={3}>
+              <div className={classes.avatar}>
+                { table.participants.map(participant => (<Avatar>H</Avatar>))} 
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
+    }
     </Container>
   );
 }
