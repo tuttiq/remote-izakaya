@@ -24,7 +24,7 @@ const Table = ({ tableName, token, handleLogout }) => {
       table.on('participantConnected', participantConnected);
       table.on('participantDisconnected', participantDisconnected);
       table.participants.forEach(participantConnected);
-    });
+    }).catch(err => console.log('err', err));
 
     return () => {
       setTable(currentTable => {

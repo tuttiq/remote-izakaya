@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Establishment(props) {
+  const userID = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
   const classes = useStyles();
 
@@ -39,15 +40,26 @@ export default function Establishment(props) {
     })
   }, []);
 
+  function onTableClick(table) {
+    props.history.push({
+      pathname: `/videochat/`,
+      state: {
+        userID,
+        table
+      }
+    })
+  }
+
   return (
     <Container component="main">
 
-    { izakaya &&
+    {izakaya &&
       <div>
         <h1>{izakaya.name}</h1>
+        <h3>Your ID: {userID}</h3>
         <div className={classes.root}>
-          {izakaya.tables.map(table =>(
-            <Card elevation={3}>
+          {izakaya.tables.map(table => (
+            <Card elevation={3} onClick={() => onTableClick(table)}> 
               <div className={classes.avatar}>
                 { table.participants.map(participant => (<Avatar>H</Avatar>))} 
               </div>
