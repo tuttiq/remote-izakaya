@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card'
 import Avatar from '@material-ui/core/Avatar'
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,8 +18,6 @@ export default function Table(props) {
   const tableName = props.tableName;
   const id = props.history.location.state.id;
 
-  const [username, setUsername] = useState('');
-
   // const handleUsernameChange = useCallback(event => {
   //   setUsername(event.target.value);
   // }, []);
@@ -29,7 +27,7 @@ export default function Table(props) {
     const data = await fetch('/video/token', {
       method: 'POST',
       body: JSON.stringify({
-        identity: username,
+        identity: "username" + Math.random(),
         table: tableName
       }),
       headers: {
@@ -41,7 +39,6 @@ export default function Table(props) {
 
   const joinTable = event => {
     //TODO: show an alert to get a name?
-    setUsername("anonymousX");
     generateToken(event);
   }
 
