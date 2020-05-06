@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useFirestore } from 'react-redux-firebase'
-import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
+import Table from '../../components/Table';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,13 +12,6 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: theme.spacing(40),
       height: theme.spacing(16),
-    },
-  },
-  avatar: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(1),
     },
   },
 }));
@@ -36,25 +28,21 @@ export default function Establishment(props) {
     firestore.collection("izakayas").doc(id).onSnapshot((izakaya) =>{
       setIzakaya(izakaya.data())
     })
-  }, []);
+  }, [firestore, id]);
 
   return (
     <Container component="main">
-
-    { izakaya &&
-      <div>
-        <h1>{izakaya.name}</h1>
-        <div className={classes.root}>
-          {izakaya.tables.map(table =>(
-            <Card elevation={3}>
-              <div className={classes.avatar}>
-                { table.participants.map(participant => (<Avatar>H</Avatar>))} 
-              </div>
-            </Card>
-          ))}
+      <div></div>
+      { izakaya &&
+        <div>
+          <h1>{izakaya.name}</h1>
+          <div className={classes.root}>
+            {izakaya.tables.map(table =>(
+              <Table key={table.name} tableName={table.name} participants={table.participants} {...props} />
+            ))}
+          </div>
         </div>
-      </div>
-    }
+      }
     </Container>
   );
 }

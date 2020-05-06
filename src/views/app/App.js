@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import CreateEstablishment from '../establishment/CreateEstablishment';
 import Establishment from '../establishment/Establishment';
-import TmpEstablishment from '../TmpEstablishment';
+import TableChat from '../establishment/TableChat';
 import Footer from '../../components/Footer';
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
       <Switch>
         <Route path='/' component={CreateEstablishment} exact />
         <Route path='/establishment/:id' component={Establishment} />
-        <Route path='/videochat' component={TmpEstablishment} />
+        <Route path='/table/:tableName' component={TableChat} />
         <Route component={Error} />
       </Switch>
       <Footer />
