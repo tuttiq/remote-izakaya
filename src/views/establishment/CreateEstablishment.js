@@ -27,7 +27,7 @@ export default function CreateEstablishment(props) {
   const classes = useStyles();
   const [inputValue, onInputChange] = useState(null)
   const firestore = useFirestore()
-  
+
 
   function onCreateClick(e) {
     e.preventDefault()
@@ -38,20 +38,20 @@ export default function CreateEstablishment(props) {
       createdAt: firestore.FieldValue.serverTimestamp(),
       tables: [
         {
-          chatroom_url: "testing",
-          participants: [{name: "mary"}, {name: "john"}] 
+          name: "table1",
+          participants: [{name: "mary"}, {name: "john"}]
         },
         {
-          chatroom_url: "testing",
-          participants: [{name: "mary"}, {name: "john"}] 
+          name: "table2",
+          participants: [{name: "mary"}, {name: "john"}]
         },
         {
-          chatroom_url: "testing",
-          participants: [] 
+          name: "table3",
+          participants: []
         },
         {
-          chatroom_url: "testing",
-          participants: [{name: "john"}] 
+          name: "table4",
+          participants: [{name: "john"}]
         }
       ]
     }).then((izakaya) => {
@@ -59,7 +59,7 @@ export default function CreateEstablishment(props) {
       props.history.push({
         pathname: `/establishment/${id}`,
         state: {
-          id: id 
+          id: id
         }
       })
     })

@@ -1,68 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import Video from 'twilio-video';
-import Participant from './Participant';
+import React from 'react';
+import Card from '@material-ui/core/Card'
+import Avatar from '@material-ui/core/Avatar'
+import { makeStyles } from '@material-ui/core/styles';
 
-const Table = ({ tableName, token, handleLogout }) => {
-  const [table, setTable] = useState(null);
-  const [participants, setParticipants] = useState([]);
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
-  useEffect(() => {
-    const participantConnected = participant => {
-      setParticipants(prevParticipants => [...prevParticipants, participant]);
-    };
+export default function Table(props) {
+  const classes = useStyles();
+  const tableName = props.tableName;
+  const id = props.history.location.state.id;
 
-    const participantDisconnected = participant => {
-      setParticipants(prevParticipants =>
-        prevParticipants.filter(p => p !== participant)
-      );
-    };
+  // const handleUsernameChange = useCallback(event => {
+  //   setUsername(event.target.value);
+  // }, []);
 
-    Video.connect(token, {
-      name: tableName
-    }).then(table => {
-      setTable(table);
-      table.on('participantConnected', participantConnected);
-      table.on('participantDisconnected', participantDisconnected);
-      table.participants.forEach(participantConnected);
-    });
+  const generateToken = async event => {
+    event.preventDefault();
+    const data = await fetch('/video/token', {
+      method: 'POST',
+      body: JSON.stringify({
+        identity: "username" + Math.random(),
+        table: tableName
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json());
+    redirectToTableChat(data.token);
+  }
 
-    return () => {
-      setTable(currentTable => {
-        if (currentTable && currentTable.localParticipant.state === 'connected') {
-          currentTable.localParticipant.tracks.forEach(function(trackPublication) {
-            trackPublication.track.stop();
-          });
-          currentTable.disconnect();
-          return null;
-        } else {
-          return currentTable;
-        }
-      });
-    };
-  }, [tableName, token]);
+  const joinTable = event => {
+    //TODO: show an alert to get a name?
+    generateToken(event);
+  }
 
-  const remoteParticipants = participants.map(participant => (
-    <Participant key={participant.sid} participant={participant} />
-  ));
+  const redirectToTableChat = (token) => {
+    // change path to TableChat
+    props.history.push({
+      pathname: `/table/${tableName}`,
+      state: {
+        id: id,
+        tableName: tableName,
+        token: token
+      }
+    })
+  }
 
   return (
-    <div className="table">
-      <h2>Table: {tableName}</h2>
-      <button onClick={handleLogout}>Log out</button>
-      <div className="local-participant">
-        {table ? (
-          <Participant
-            key={table.localParticipant.sid}
-            participant={table.localParticipant}
-          />
-        ) : (
-          ''
-        )}
+    <Card elevation={3} onClick={joinTable}>
+      <div className={classes.avatar}>
+        { props.participants.map(participant => (<Avatar key={tableName+participant.name} >H</Avatar>))}
       </div>
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
-    </div>
+    </Card>
   );
-};
-
-export default Table;
+}
