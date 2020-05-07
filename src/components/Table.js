@@ -16,11 +16,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Table(props) {
   const classes = useStyles();
   const tableName = props.tableName;
-  const id = props.history.location.state.id;
-
-  // const handleUsernameChange = useCallback(event => {
-  //   setUsername(event.target.value);
-  // }, []);
+  const id = props.key;
 
   const generateToken = async event => {
     event.preventDefault();
@@ -56,6 +52,7 @@ export default function Table(props) {
 
   return (
     <Card elevation={3} onClick={joinTable}>
+      <p>{props.tableName}</p>
       <div className={classes.avatar}>
         { props.participants.map(participant => (<Avatar key={tableName+participant.name} >H</Avatar>))}
       </div>
