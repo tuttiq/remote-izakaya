@@ -22,6 +22,7 @@ const rfConfig = {
 }
 
 firebase.initializeApp(fbconfig)
+export const db = firebase.firestore();
 
 const store = createStore()
 

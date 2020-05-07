@@ -36,24 +36,6 @@ export default function CreateEstablishment(props) {
       name: inputValue,
       owner: 'Anonymous',
       createdAt: firestore.FieldValue.serverTimestamp(),
-      tables: [
-        {
-          name: "table1",
-          participants: [{name: "mary"}, {name: "john"}]
-        },
-        {
-          name: "table2",
-          participants: [{name: "mary"}, {name: "john"}]
-        },
-        {
-          name: "table3",
-          participants: []
-        },
-        {
-          name: "table4",
-          participants: [{name: "john"}]
-        }
-      ]
     }).then((izakaya) => {
       const id = izakaya.id
       props.history.push({
